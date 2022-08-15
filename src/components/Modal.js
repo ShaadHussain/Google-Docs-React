@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { addDoc, collection } from 'firebase/firestore';
+
 
 const style = {
     position: 'absolute',
@@ -16,11 +18,17 @@ const style = {
     p: 4,
 };
 
-export default function ModalComponent({open, setOpen}) {
+export default function ModalComponent({
+    open,
+    setOpen,
+    title,
+    setTitle,
+    addData
+}) {
     // const [open, setOpen] = React.useState(false);
     // const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    // const collectionRef = collection(database, 'docsData')
     return (
         <div>
             <Modal
@@ -33,9 +41,15 @@ export default function ModalComponent({open, setOpen}) {
                 <Box sx={style}>
                     <input 
                         placeholder='Add the Title'
-                        className='add-input'/>
+                        className='add-input'
+                        onChange={(event) => setTitle(event.target.value)}
+                        value={title}
+                        />
                     <div className='button-container'>
-                        <button className='add-docs'>
+                        <button 
+                            className='add-docs'
+                            onClick={addData}
+                        >
                             Add 
                         </button>
                     </div>
